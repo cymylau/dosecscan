@@ -1,0 +1,20 @@
+trigger:
+- main
+
+jobs:
+- job: SecurityScan
+  displayName: "Security Scanning"
+  pool:
+    vmImage: 'ubuntu-latest'
+
+  variables:
+    scan_type: "-url"  # Change to "-domain" or "-ip" as needed
+    target_value: "http://example.com"  # Change based on scan type
+
+  steps:
+  - checkout: self
+
+  - script: |
+      chmod +x script.sh
+      ./script.sh $scan_type $target_value
+    displayName: "Run Security Scan"
